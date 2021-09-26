@@ -1,57 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
+import Header from './Header';
+import Sidebar from './Sidebar';
+import Counter from './Counter';
+import api from './api/posts';
+import Home from './Home';
 
 function App() {
+  const [posts, setPosts] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(()=>{
+    const fetchPosts = async () =>{
+      try {
+        const response = await api.get('/posts');
+        setPosts(response.data);
+      } catch (err){
+        if(err.response){
+
+        
+          //not in the 200 response range
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+      
+    }else{
+      console.log('Error: ${err.message}')
+    }
+  }
+}
+fetchPosts();  }, [])
+useEffect(() => {
+  const filteredResults = posts.filter((post) =>
+    ((post.body).toLowerCase()).includes(search.toLowerCase())
+    || ((post.title).toLowerCase()).includes(search.toLowerCase()));
+
+  setSearchResults(filteredResults.reverse());
+}, [posts, search])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <div className="app">
+
+      <Counter/>
+      <Home posts={searchResults}/>
+      <Header>
+      <h2>Hi</h2>
+      </Header>
+      <Sidebar/>
+      
+      </div>
   );
 }
 
