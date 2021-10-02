@@ -1,0 +1,48 @@
+.SidebarOption{
+    display: flex;
+    height: 40px;
+    padding: 4px;
+    align-items: center;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    color: gray;
+    
+}
+.SidebarOption:hover >.number {
+    display: inline;
+}
+.SidebarOption--active>.number{
+    display: inline;
+}
+
+
+.SidebarOption:hover,
+.SidebarOption:hover >.number,
+.SidebarOption:hover >.title,
+.SidebarOption--active,
+.SidebarOption--active>.number,
+.SidebarOption--active>.title
+{
+    background-color: #fcecec;
+    color: lightcoral;
+    font-weight: 800;
+}
+
+
+.title{
+    /* background-color: green; */
+    flex: 1;
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.number{
+    display: none;
+    font-weight: 300;
+}
+
+.Icon{
+    margin-right: 10px;
+}

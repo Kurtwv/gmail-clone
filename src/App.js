@@ -1,11 +1,19 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from './Header/Header';
+import Sidebar from './Sidebar/Sidebar';
 import Counter from './Counter';
 import api from './api/posts';
 import Home from './Home';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Mail from './Email/Mail';
+import EmailList from './Email/EmailList';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -41,16 +49,31 @@ useEffect(() => {
   setSearchResults(filteredResults.reverse());
 }, [posts, search])
   return (
+    <Router>
     <div className="app">
 
       <Counter/>
       <Home posts={searchResults}/>
-      <Header>
-      <h2>Hi</h2>
-      </Header>
-      <Sidebar/>
+      <Header/>
+        <div className="body">
+        <Sidebar/>
+        <Switch>
+            <Route path="mail">
+              <Mail/>
+            </Route>
+            <Route path="/">
+              <EmailList/>
+            </Route>
+        </Switch>
+
+
+        </div>
       
-      </div>
+      
+        </div>
+     </Router>
+      
+     
   );
 }
 
