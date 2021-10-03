@@ -14,6 +14,9 @@ import {
 } from "react-router-dom";
 import Mail from './Email/Mail';
 import EmailList from './Email/EmailList';
+import SendMail from './SendMail/SendMail';
+import { useSelector } from 'react-redux';
+import { selectSendMessageIsOpen } from './features/mailSlice';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -47,18 +50,21 @@ useEffect(() => {
     || ((post.title).toLowerCase()).includes(search.toLowerCase()));
 
   setSearchResults(filteredResults.reverse());
-}, [posts, search])
+}, [posts, search]);
+
+const sendMessageIsOpen = useSelector(selectSendMessageIsOpen);
+
   return (
     <Router>
     <div className="app">
 
-      <Counter/>
-      <Home posts={searchResults}/>
+      {/* <Counter/> */}
+      {/* <Home posts={searchResults}/> */}
       <Header/>
         <div className="body">
         <Sidebar/>
         <Switch>
-            <Route path="mail">
+            <Route path="/mail">
               <Mail/>
             </Route>
             <Route path="/">
@@ -68,7 +74,7 @@ useEffect(() => {
 
 
         </div>
-      
+        {sendMessageIsOpen && <SendMail/>}
       
         </div>
      </Router>

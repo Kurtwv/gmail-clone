@@ -10,7 +10,7 @@ function EmailSection({Icon, title, color, selected}) {
                 
                 
                 <Icon/>
-                <h2>{title}</h2>
+                <h4>{title}</h4>
            
         </div>
     )
