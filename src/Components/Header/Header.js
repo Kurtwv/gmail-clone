@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Header.css";
 import MenuIcon from '@material-ui/icons/Menu';
 import {Avatar, IconButton } from '@material-ui/core';
@@ -6,9 +6,30 @@ import SearchIcon from '@material-ui/icons/Search';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AppsIcon from '@material-ui/icons/Apps';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { logout } from '../../features/userSlice';
+import { auth } from '../../firebase';
+import { useDispatch } from 'react-redux';
 
 
-function Header() {
+function Header({input, setInput}) {
+
+    const dispatch = useDispatch();
+    // const [input, setInput] = useState('');
+
+    const signOut = () => {
+        auth.signOut().then(() => {
+            dispatch(logout())
+        })
+
+    };
+
+    const search = () => {
+
+        console.log("okay", input);
+
+        setInput("");
+    }
+    
     return (
         <div className="header">
             <div className="header__left">
@@ -20,7 +41,8 @@ function Header() {
 
             <div className="header__middle">
             <SearchIcon/>
-            <input placeholder="Search mail" type="text" />
+            <input onKeyPress={(e) => {if(e.key==='Enter'){search()}}} onChange={((e) => {setInput(e.target.value)})} value={input} placeholder="Search mail" type="text" />
+            <h2>{input}</h2>
             <ArrowDropDownIcon className="dropdownarrow"/>
             </div>
 
@@ -32,7 +54,7 @@ function Header() {
             <IconButton>
             <NotificationsIcon/>
             </IconButton>
-            <Avatar/>
+            <Avatar onClick={() => signOut()}/>
 
             </div>
             

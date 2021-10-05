@@ -1,5 +1,7 @@
+/* overflow hidden cant scroll down because of 100 vh*/
 *{
   margin:0;
+  overflow: hidden;
 }
 
 body {

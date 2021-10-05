@@ -1,85 +1,75 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
-import Header from './Header/Header';
+import Header from './Components/Header/Header';
 import Sidebar from './Sidebar/Sidebar';
-import Counter from './Counter';
-import api from './api/posts';
-import Home from './Home';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
-import Mail from './Email/Mail';
-import EmailList from './Email/EmailList';
-import SendMail from './SendMail/SendMail';
-import { useSelector } from 'react-redux';
+import Mail from './Components/Email/Mail';
+import EmailList from './Components/Email/EmailList';
+import SendMail from './Components/SendMail/SendMail';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectSendMessageIsOpen } from './features/mailSlice';
+import { login, selectUser } from './features/userSlice';
+import Login from './Components/Login/Login';
+import { auth } from './firebase';
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  const [counter, setCounter] = useState(0);
-  const [search, setSearch] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [emails, setEmails] = useState([]);
+  const [input, setInput] = useState('');
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
-  useEffect(()=>{
-    const fetchPosts = async () =>{
-      try {
-        const response = await api.get('/posts');
-        setPosts(response.data);
-      } catch (err){
-        if(err.response){
+  //Stay signed in when refresh page
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if(user){
+          dispatch(login({
+            displayName: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL
+          }))
+      }else{
 
-        
-          //not in the 200 response range
-          console.log(err.response.data);
-          console.log(err.response.status);
-          console.log(err.response.headers);
-      
-    }else{
-      console.log('Error: ${err.message}')
-    }
-  }
-}
-fetchPosts();  }, [])
-useEffect(() => {
-  const filteredResults = posts.filter((post) =>
-    ((post.body).toLowerCase()).includes(search.toLowerCase())
-    || ((post.title).toLowerCase()).includes(search.toLowerCase()));
-
-  setSearchResults(filteredResults.reverse());
-}, [posts, search]);
+      }
+    })
+  },[]);
+  
 
 const sendMessageIsOpen = useSelector(selectSendMessageIsOpen);
 
   return (
-    <Router>
-    <div className="app">
-
-      {/* <Counter/> */}
-      {/* <Home posts={searchResults}/> */}
-      <Header/>
-        <div className="body">
-        <Sidebar/>
-        <Switch>
-            <Route path="/mail">
-              <Mail/>
-            </Route>
-            <Route path="/">
-              <EmailList/>
-            </Route>
-        </Switch>
+        <Router>
+          {!user ?(
+            <Login/>):(
+                <div className="app">
+          <Header input={input} setInput={setInput}/>
+                <div className="body">
+            <Sidebar/>
+            <Switch>
+                <Route path="/mail">
+                  <Mail/>
+                </Route>
+                <Route path="/">
+                  <EmailList emails={emails} setEmails={setEmails}/>
+                </Route>
+            </Switch>
 
 
         </div>
         {sendMessageIsOpen && <SendMail/>}
       
         </div>
-     </Router>
-      
      
+        )
+      } 
+    
+      
+    </Router>   
   );
 }
 

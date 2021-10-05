@@ -39,6 +39,9 @@
     padding-right: 15px;
     font-size: 9px;
     font-weight: bold;
+    white-space:nowrap;
+    overflow: hidden;
+    /* width: 150px; */
 }
 .emailRow__Description{
     font-weight: 400;
