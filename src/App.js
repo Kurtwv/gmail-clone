@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
 import Header from './Components/Header/Header';
-import Sidebar from './Sidebar/Sidebar';
+import Sidebar from './Components/Sidebar/Sidebar';
 import {
   BrowserRouter as Router,
   Switch,
@@ -55,7 +55,7 @@ const sendMessageIsOpen = useSelector(selectSendMessageIsOpen);
                   <Mail/>
                 </Route>
                 <Route path="/">
-                  <EmailList emails={emails} setEmails={setEmails}/>
+                  <EmailList emails={emails} setEmails={setEmails} input={input} setInput={setInput}/>
                 </Route>
             </Switch>
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import "./EmailSection.css";
 function EmailSection({Icon, title, color, selected}) {
+
+    // Primary, Social and Promotions tab //
+    // Primary is selected                // 
+
     return (
         <div className={`section ${selected && 'section--selected'}`}
             style={{

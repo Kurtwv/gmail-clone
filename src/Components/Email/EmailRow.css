@@ -33,9 +33,17 @@
 }
 .emailRow__Title{
     font-size: 13px;
-    flex: 0.3;
+    /* flex: 0.3; */
+    flex-basis: 23%;
 }
+@media (max-width:960px) {
+.emailRow__Time
+     {
+         /* background-color: blueviolet; */
+         display: none;
+    } }
 .emailRow__Time{
+    
     padding-right: 15px;
     font-size: 9px;
     font-weight: bold;

@@ -7,9 +7,14 @@
 .login__container{
     display: flex;
     flex-direction: column;
+    
 }
 
 .login__container > img {
     object-fit: contain;
     height: 200px;;
+}
+
+.login__container>Button{
+    margin-bottom: 20px;
 }

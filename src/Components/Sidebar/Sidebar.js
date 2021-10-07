@@ -13,11 +13,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PersonIcon from "@material-ui/icons/Person";
 import DuoIcon from "@material-ui/icons/Duo";
 import PhoneIcon from "@material-ui/icons/Phone";
-import { openSendMessage, selectSendMessageIsOpen } from '../features/mailSlice';
+import { openSendMessage, selectSendMessageIsOpen } from '../../features/mailSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
-
+    
 
 function Sidebar() {
     const sendMessageIsOpen = useSelector(selectSendMessageIsOpen);
@@ -26,6 +26,10 @@ function Sidebar() {
     const composeButton = () => {
         dispatch(openSendMessage())
     }
+
+    // Compose button, sets off dispatch to mailSlice (redux)  //
+    // Passing Icons and title to SidebarOption                //
+    // Inbox selected as default                               //
 
     return (
         <div className="sidebar">
@@ -37,6 +41,7 @@ function Sidebar() {
             <SidebarOption Icon={NearMeIcon} title="Sent" number={54}/>
             <SidebarOption Icon={NoteIcon} title="Drafts" number={54}/>
             <SidebarOption Icon={ExpandMoreIcon} title="More" number={54}/>
+            
 
             <div className="sidebar__footer">
                 <div className="sidebar__footerIcons">

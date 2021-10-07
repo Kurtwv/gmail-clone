@@ -14,7 +14,9 @@ import { useDispatch } from 'react-redux';
 function Header({input, setInput}) {
 
     const dispatch = useDispatch();
-    // const [input, setInput] = useState('');
+
+    // Dispatch logout from userSlice      //
+    // Input state from search input field //
 
     const signOut = () => {
         auth.signOut().then(() => {
@@ -24,9 +26,6 @@ function Header({input, setInput}) {
     };
 
     const search = () => {
-
-        console.log("okay", input);
-
         setInput("");
     }
     
@@ -42,7 +41,6 @@ function Header({input, setInput}) {
             <div className="header__middle">
             <SearchIcon/>
             <input onKeyPress={(e) => {if(e.key==='Enter'){search()}}} onChange={((e) => {setInput(e.target.value)})} value={input} placeholder="Search mail" type="text" />
-            <h2>{input}</h2>
             <ArrowDropDownIcon className="dropdownarrow"/>
             </div>
 
@@ -54,7 +52,7 @@ function Header({input, setInput}) {
             <IconButton>
             <NotificationsIcon/>
             </IconButton>
-            <Avatar onClick={() => signOut()}/>
+            <Avatar className="avatar" onClick={() => signOut()}/>
 
             </div>
             
